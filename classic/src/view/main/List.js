@@ -10,46 +10,46 @@ Ext.define('MyApp.view.main.List', {
     title: 'Employee details',
 
     // Connect to IndexedDB and retrieve data
-    initComponent: function() {
-        var me = this;
+    // initComponent: function() {
+    //     var me = this;
 
-        // Connect to IndexedDB
-        var request = indexedDB.open("myDatabase", 1);
+    //     // Connect to IndexedDB
+    //     var request = indexedDB.open("myDatabase", 1);
 
-        request.onerror = function(event) {
-            console.log("Error opening IndexedDB database: " + event.target.errorCode);
-        };
+    //     request.onerror = function(event) {
+    //         console.log("Error opening IndexedDB database: " + event.target.errorCode);
+    //     };
 
-        request.onupgradeneeded = function(event) {
-            var db = event.target.result;
-            var objectStore = db.createObjectStore("registrationData", { keyPath: "id" });
-        };
+    //     request.onupgradeneeded = function(event) {
+    //         var db = event.target.result;
+    //         var objectStore = db.createObjectStore("registrationData", { keyPath: "id" });
+    //     };
 
-        request.onsuccess = function(event) {
-            var db = event.target.result;
-            var transaction = db.transaction("registrationData", "readonly");
-            var objectStore = transaction.objectStore("registrationData");
-            var request = objectStore.getAll();
+    //     request.onsuccess = function(event) {
+    //         var db = event.target.result;
+    //         var transaction = db.transaction("registrationData", "readonly");
+    //         var objectStore = transaction.objectStore("registrationData");
+    //         var request = objectStore.getAll();
 
-            request.onerror = function(event) {
-                console.log("Error retrieving data from IndexedDB: " + event.target.errorCode);
-            };
+    //         request.onerror = function(event) {
+    //             console.log("Error retrieving data from IndexedDB: " + event.target.errorCode);
+    //         };
 
-            request.onsuccess = function(event) {
-                var data = event.target.result;
+    //         request.onsuccess = function(event) {
+    //             var data = event.target.result;
 
-                // Create a new Store and set its data to the retrieved data
-                var store = Ext.create('MyApp.store.Personnel', {
-                    data: data
-                });
+    //             // Create a new Store and set its data to the retrieved data
+    //             var store = Ext.create('MyApp.store.Personnel', {
+    //                 data: data
+    //             });
 
-                // Set the new Store as the Store for the Grid
-                me.setStore(store);
-            };
-        };
+    //             // Set the new Store as the Store for the Grid
+    //             me.setStore(store);
+    //         };
+    //     };
 
-        me.callParent();
-    },
+    //     me.callParent();
+    // },
 
     columns: [
         { text: 'Name', dataIndex: 'name' },

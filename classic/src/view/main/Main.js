@@ -128,6 +128,15 @@ Ext.define('MyApp.view.main.Main', {
         //     html: '{loremIpsum}'
         // }
     },
+    {
+    title: 'Employee Login',
+    iconCls: 'fa-home',
+    // // The following grid shares a store with the classic version's grid as well!
+    items: [{
+        // xtype: 'mainlist'
+        xtype: 'template-login',
+    }]
+    }
     //  {
     //     title: 'Registration',
     //     xtype: 'RegistrationData',

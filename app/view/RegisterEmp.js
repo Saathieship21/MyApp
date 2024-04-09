@@ -22,7 +22,7 @@ Ext.define('MyApp.view.main.RegisterEmp', {
         defaultType: 'textfield',
         margin: '20 0 0',
         items: [{
-            fieldLabel: 'First Name',
+            fieldLabel: 'Name',
             name: 'Name',
             allowBlank: false,
         }, {
@@ -30,6 +30,15 @@ Ext.define('MyApp.view.main.RegisterEmp', {
             name: 'last',
             allowBlank: false,
         }, {
+            
+            fieldLabel: 'password',
+            placeholder: 'password',
+            name: 'password',
+            allowBlank: false,
+        },
+        
+        
+        {
             fieldLabel: 'Company',
             name: 'company',
             allowBlank: false,
@@ -142,47 +151,45 @@ Ext.define('MyApp.view.main.RegisterEmp', {
         formBind: true,
         handler: function() {
             // Get the registration data
-            const registrationData = this.up('form').getValues();
-    
+            const loginData = this.up('form').getValues();
+ 
             // Filter out empty values
             const filteredData = {};
-            Object.keys(registrationData).forEach(key => {
-                if (registrationData[key] !== '') {
-                    filteredData[key] = registrationData[key]
+            Object.keys(loginData).forEach(key => {
+                if (loginData[key] !== '') {
+                    filteredData[key] = loginData[key];
                 }
             });
-    
+ 
             // Store the filtered registration data in IndexedDB
-            const request = window.indexedDB.open('myDatabase', 1);
+            const request = window.indexedDB.open('loginDataform', 1);
             request.onupgradeneeded = function(event) {
                 const db = event.target.result;
-                const store = db.createObjectStore('registrationData', {
+                
+                const store = db.createObjectStore('loginData', {
                     keyPath: 'id',
                     autoIncrement: true
                 });
-            }
+            };
             const button = this;
             request.onsuccess = function(event) {
                 const db = event.target.result;
-                const transaction = db.transaction(['registrationData'], 'readwrite')
-                const store = transaction.objectStore('registrationData')
+                const transaction = db.transaction(['loginData'], 'readwrite');
+                const store = transaction.objectStore('loginData');
                 const request = store.add(filteredData);
                 request.onsuccess = function() {
-                    // console.log('Registration data saved to IndexedDB:', filteredData);
-                    Ext.toast("Registered successfully" );
+                    console.log('Registration data saved to IndexedDB:', filteredData);
                     button.up('form').reset();
-                }
+                };
                 request.onerror = function(event) {
                     console.error('Error saving registration data:', event.target.errorCode);
-                }
-                store.getAll().onsuccess = function(event) {
-                    console.log('All registration data:', event.target.result);
-                }
-            }
+                };
+            };
             request.onerror = function(event) {
                 console.error('Error opening database:', event.target.errorCode);
             }
-        },
+                                              
+}
         // handler: 'callBack',
     }]
 
