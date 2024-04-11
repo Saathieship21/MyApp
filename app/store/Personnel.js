@@ -29,12 +29,12 @@ Ext.define('MyApp.store.Personnel', {
             type: 'json',
             rootProperty: 'items'
         }
+    },
+    data: {
+        proxy: {
+            type: 'indexedDB',
+            database: 'myDatabase', // Replace with your database name
+            objectStoreName: 'registrationData' // Replace with your object store name
+        }
     }
-    // data: {
-    //     proxy: {
-    //         type: 'indexedDB',
-    //         database: 'myDatabase', // Replace with your database name
-    //         objectStoreName: 'registrationData' // Replace with your object store name
-    //     }
-    // }
 });

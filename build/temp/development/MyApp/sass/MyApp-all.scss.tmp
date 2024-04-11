@@ -996,6 +996,7 @@ $include-myapp-view-main-main: dynamic(true);;
 $include-myapp-view-main-maincontroller: dynamic(true);;
 $include-myapp-view-main-mainmodel: dynamic(true);;
 $include-myapp-view-main-registeremp: dynamic(true);;
+$include-myapp-view-main-save: dynamic(true);;
 $output-paths: ("path": "../../classic/resources", "shared": "../../resources");
 
 /* ======================== ETC ======================== */
