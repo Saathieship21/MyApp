@@ -176,7 +176,7 @@ Ext.define('MyApp.view.main.List', {
 //                 var nextPageView = Ext.getCmp('MyApp.view.main.Login');
 // nextPageView.show();
             // },
-           //update repos
+          //CHG
             style: {
     
                 background: 'silver',
