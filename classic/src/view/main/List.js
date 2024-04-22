@@ -10,55 +10,55 @@ Ext.define('MyApp.view.main.List', {
     title: 'Employee details',
 
     // Connect to IndexedDB and retrieve data
-    // initComponent: function() {
-    //     var me = this;
+    initComponent: function() {
+        var me = this;
 
-    //     // Connect to IndexedDB
-    //     var request = indexedDB.open("myDatabase", 1);
+        // Connect to IndexedDB
+        var request = indexedDB.open("myDatabase", 1);
 
-    //     request.onerror = function(event) {
-    //         console.log("Error opening IndexedDB database: " + event.target.errorCode);
-    //     };
+        request.onerror = function(event) {
+            console.log("Error opening IndexedDB database: " + event.target.errorCode);
+        };
 
-    //     request.onupgradeneeded = function(event) {
-    //         var db = event.target.result;
-    //         var objectStore = db.createObjectStore("registrationData", { keyPath: "id" });
-    //     };
+        request.onupgradeneeded = function(event) {
+            var db = event.target.result;
+            var objectStore = db.createObjectStore("registrationData", { keyPath: "id" });
+        };
 
-    //     request.onsuccess = function(event) {
-    //         var db = event.target.result;
-    //         var transaction = db.transaction("registrationData", "readonly");
-    //         var objectStore = transaction.objectStore("registrationData");
-    //         var request = objectStore.getAll();
+        request.onsuccess = function(event) {
+            var db = event.target.result;
+            var transaction = db.transaction("registrationData", "readonly");
+            var objectStore = transaction.objectStore("registrationData");
+            var request = objectStore.getAll();
 
-    //         request.onerror = function(event) {
-    //             console.log("Error retrieving data from IndexedDB: " + event.target.errorCode);
-    //         };
+            request.onerror = function(event) {
+                console.log("Error retrieving data from IndexedDB: " + event.target.errorCode);
+            };
 
-    //         request.onsuccess = function(event) {
-    //             var data = event.target.result;
+            request.onsuccess = function(event) {
+                var data = event.target.result;
 
-    //             // Create a new Store and set its data to the retrieved data
-    //             var store = Ext.create('MyApp.store.Personnel', {
-    //                 data: data
-    //             });
+                // Create a new Store and set its data to the retrieved data
+                var store = Ext.create('MyApp.store.Personnel', {
+                    data: data
+                });
 
-    //             // Set the new Store as the Store for the Grid
-    //             me.setStore(store);
-    //         };
-    //     };
+                // Set the new Store as the Store for the Grid
+                me.setStore(store);
+            };
+        };
 
-    //     me.callParent();
-    // },
+        me.callParent();
+    },
 
     columns: [
-        { text: 'Name', dataIndex: 'name' },
-        { text: 'Last', dataIndex: 'last' },
-        { text: 'Email', dataIndex: 'email', flex: 1 },
-        { text: 'Phone', dataIndex: 'phone', flex: 1 },
+        { text: 'Name', dataIndex: 'Name' },
+        { text: 'Last', dataIndex: 'Last' },
+        { text: 'Email', dataIndex: 'Email', flex: 1 },
+        // { text: 'Phone', dataIndex: 'Phone', flex: 1 },
         { text: 'ID', dataIndex: 'id', flex: 1 },
-        { text: 'Company', dataIndex: 'company' },
-        { text: 'Department', dataIndex: 'Department', flex: 1 },
+        { text: 'Company', dataIndex: 'Company' },
+        // { text: 'Department', dataIndex: 'Department', flex: 1 },
         { text: 'Address', dataIndex: 'Address', flex: 1 }
     ],
 
@@ -94,7 +94,30 @@ Ext.define('MyApp.view.main.List', {
             tooltip: 'delete',
             reference: 'btndelete',
             disabled: true
-        },{
+        },
+        {
+            // xtype: 'textfield',
+            xtype: 'combobox',
+            emptyText: 'Search...',
+            width: 200,
+            valueField: 'abbr',
+                displayField: 'state',
+                forceSelection: true,
+                queryMode: 'local',
+                clearable: true,
+                store: {
+                    type: 'DataEmp'
+                }
+            
+            
+           },
+           {
+            xtype: 'button',
+            // text: 'Search',
+            iconCls: 'x-fa fa-search blue',
+            handler: 'onSearchButtonClick',
+           },
+        {
             xtype: 'button',
             itemId: 'edit',
             text: 'Edit',
@@ -109,6 +132,57 @@ Ext.define('MyApp.view.main.List', {
             tooltip: 'Add',
             reference: 'btnadd',
             handler: 'onButtonAddClick'
-        }
+        },
+
+        // {
+        //     xtype: 'button',
+        //     itemId: 'logout',
+        //     text: 'Logout',
+        //     tooltip: 'Logout',
+        //     iconCls: 'fas fa-power-off red',
+        //     // iconCls: 'x-fa-fa-plus',
+        //     reference: 'btnLogout',
+        //     // handler: function(){
+        //     //     Ext.Msg.alert('working', 'are you sure!');
+        //     //     // window.location.href = 'http://192.168.75.65:1841/';
+        //     //     // view.push({
+        //     //     //     title: 'LOggedout',
+        //     //     //     html: 'Your application has been loggedout'
+        //     //     // });
+        //     // },
+        //     handler: function() {
+        //         Ext.Msg.alert('working', 'are you sure!');
+        //         window.location.href = 'view/main/Login.js';
+        //     },
+
+        {
+            xtype: 'button',
+            itemId: 'logout',
+            text: 'Logout',
+            tooltip: 'Logout',
+            iconCls: 'fas fa-power-off red',
+            reference: 'btnLogout',
+            handler: () => {
+                Ext.Msg.confirm('Logout', 'Are you sure you want to logout?', (answer) => {
+                    if (answer === 'yes') {
+                        localStorage.setItem("Login.js", true);
+                        window.location.href = 'MyApp\app\view\Login.js';
+                        // Ext.router.Router.navigate('MyApp/app/view/Login.js');
+                    }
+                    console.log("Logout")
+                });
+            },
+//             handler: () => {
+//                 var nextPageView = Ext.getCmp('MyApp.view.main.Login');
+// nextPageView.show();
+            // },
+            style: {
+    
+                background: 'silver',
+                
+                
+            }
+        },
     ]
 });
+Ext.toast("You are currently viewing Employee data" );

@@ -2,7 +2,7 @@ Ext.define('MyApp.model.Personnel', {
     extend: 'MyApp.model.Base',
 
     fields: [
-        'name','last', 'email', 'phone', 'ID','company','dob','Department','skills', 'Address'
+        'Name','Last', 'Email', 'Phone', 'ID','Company','Dob','Department','Skills', 'Address'
         // 'name', 'EMPID'
     ]
 });

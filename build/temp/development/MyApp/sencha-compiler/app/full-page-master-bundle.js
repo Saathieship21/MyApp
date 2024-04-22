@@ -1,2 +1,2 @@
 // @tag full-page
-// @require C:\finalout\MyApp\app.js
+// @require C:\Users\phkramachandrudu\NewMyApp\MyApp\app.js

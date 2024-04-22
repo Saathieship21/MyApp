@@ -14,15 +14,15 @@ Ext.define('MyApp.view.main.LoginController', {
             var passwordent = formValues.password;
         
             
-            var request = indexedDB.open("loginDataform");
+            var request = indexedDB.open("myDatabase");
         
             
             request.onsuccess = function(event) {
                 var db = event.target.result;
         
                 
-                var transaction = db.transaction(["loginData"], "readwrite");
-                var objectStore = transaction.objectStore("loginData");
+                var transaction = db.transaction(["registrationData"], "readwrite");
+                var objectStore = transaction.objectStore("registrationData");
         
                 
                 var cursorRequest = objectStore.openCursor();
@@ -42,7 +42,7 @@ Ext.define('MyApp.view.main.LoginController', {
                         if (Name === usernameent && password === passwordent) {
                             // Login successful
                             console.log("Login successful");
-                            // window.location.href = 'https://www.google.com/';
+                            window.location.href = 'https://www.google.com/';
                             Ext.widget('save');
                         } else {
                             
