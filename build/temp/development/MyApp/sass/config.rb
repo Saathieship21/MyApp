@@ -1,1 +1,1 @@
-cache_path = 'C:\Users\phkramachandrudu\NewMyApp\MyApp/build/.sass-cache'
+cache_path = 'C:\Users\phkramachandrudu\MyAppNew\MyApp/build/.sass-cache'
