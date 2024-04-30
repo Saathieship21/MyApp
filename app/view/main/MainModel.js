@@ -9,7 +9,7 @@ Ext.define('MyApp.view.main.MainModel', {
     data: {
         name: 'ISLAND PACIFIC',
 
-        
+        html: 'hiiiiiiiii',
     },
 
 

@@ -1,10 +1,13 @@
 Ext.define('MyApp.view.main.List', {
     extend: 'Ext.grid.Panel',
+    controller: 'List',
     xtype: 'mainlist',
     scrollable: true, 
     requires: [
         'MyApp.store.Personnel',
-        'MyApp.model.Personnel'
+        'MyApp.model.Personnel',
+        'MyApp.view.main.ListController'
+        
     ],
 
     title: 'Employee details',
@@ -14,7 +17,7 @@ Ext.define('MyApp.view.main.List', {
         var me = this;
 
         // Connect to IndexedDB
-        var request = indexedDB.open("myDatabase", 1);
+        var request = indexedDB.open("loginDataform", 1);
 
         request.onerror = function(event) {
             console.log("Error opening IndexedDB database: " + event.target.errorCode);
@@ -22,13 +25,13 @@ Ext.define('MyApp.view.main.List', {
 
         request.onupgradeneeded = function(event) {
             var db = event.target.result;
-            var objectStore = db.createObjectStore("registrationData", { keyPath: "id" });
+            var objectStore = db.createObjectStore("loginData", { keyPath: "id" });
         };
 
         request.onsuccess = function(event) {
             var db = event.target.result;
-            var transaction = db.transaction("registrationData", "readonly");
-            var objectStore = transaction.objectStore("registrationData");
+            var transaction = db.transaction("loginData", "readonly");
+            var objectStore = transaction.objectStore("loginData");
             var request = objectStore.getAll();
 
             request.onerror = function(event) {
@@ -61,15 +64,19 @@ Ext.define('MyApp.view.main.List', {
         // { text: 'Department', dataIndex: 'Department', flex: 1 },
         { text: 'Address', dataIndex: 'Address', flex: 1 }
     ],
+    
 
     selModel: {
         selType: 'checkboxmodel',
-        mode: 'SINGLE',
+        // mode: 'SINGLE',
         listeners: {
             select: 'onChecked'
         }
     },
-
+    // grid.selModel = Ext.create('Ext.selection.Model', selModelConfig),
+    
+    
+    
     tbar: [
         {
             xtype: 'image',
@@ -165,9 +172,12 @@ Ext.define('MyApp.view.main.List', {
             handler: () => {
                 Ext.Msg.confirm('Logout', 'Are you sure you want to logout?', (answer) => {
                     if (answer === 'yes') {
-                        localStorage.setItem("Login.js", true);
-                        window.location.href = 'MyApp\app\view\Login.js';
-                        // Ext.router.Router.navigate('MyApp/app/view/Login.js');
+                        var mainPanel = Ext.ComponentQuery.query('#mainPanel')[0];
+                                mainPanel.removeAll();
+                                mainPanel.add({
+                                xtype: 'singlepage' // Assuming this is a valid xtype
+                                });
+                        console.log("log out");
                     }
                     console.log("Logout")
                 });
@@ -186,4 +196,4 @@ Ext.define('MyApp.view.main.List', {
         },
     ]
 });
-Ext.toast("You are currently viewing Employee data" );
+// Ext.toast("You are currently viewing Employee data" );

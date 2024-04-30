@@ -7,22 +7,22 @@ Ext.define('MyApp.view.main.LoginController', {
         
             // Retrieve the form values
             var form = button.up('form');
-            if (!form) return;
+            
         
             var formValues = form.getForm().getValues();
             var usernameent = formValues.username;
             var passwordent = formValues.password;
         
             
-            var request = indexedDB.open("myDatabase");
+            var request = indexedDB.open("loginDataform");
         
             
             request.onsuccess = function(event) {
                 var db = event.target.result;
         
                 
-                var transaction = db.transaction(["registrationData"], "readwrite");
-                var objectStore = transaction.objectStore("registrationData");
+                var transaction = db.transaction(["loginData"], "readwrite");
+                var objectStore = transaction.objectStore("loginData");
         
                 
                 var cursorRequest = objectStore.openCursor();
@@ -34,15 +34,23 @@ Ext.define('MyApp.view.main.LoginController', {
                         var value = cursor.value;
                         var Name = value.Name;
                         var password = value.password;
-        
+                        //     console.log(value);
                         // console.log("Name:", Name);
                         // console.log("Password:", password);
         
                         
                         if (Name === usernameent && password === passwordent) {
                             // Login successful
-                            console.log("Login successful");
-                            window.location.href = 'https://www.google.com/';
+                                var mainPanel = Ext.ComponentQuery.query('#mainPanel')[0];
+                                mainPanel.removeAll();
+                                mainPanel.add({
+                                xtype: 'appEmp' // Assuming this is a valid xtype
+                                });
+
+
+
+                            // console.log("Login successful");
+                            // window.location.href = 'https://www.google.com/';
                             Ext.widget('save');
                         } else {
                             
@@ -50,7 +58,7 @@ Ext.define('MyApp.view.main.LoginController', {
                         }
                     } else {
                         
-                        console.log("Login unsuccessful");
+                        // console.log("Login unsuccessful");
                         alert("Login unsuccessful. Please check your username and password.");
                     }
                 };
