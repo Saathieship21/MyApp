@@ -50,16 +50,17 @@ Ext.define('MyApp.view.main.List', {
 
         me.callParent();
     },
-
+  
     columns: [
-        { text: 'Name', dataIndex: 'Name' },
+        { text: 'Name', dataIndex: 'Name',  },
         { text: 'Last', dataIndex: 'Last' },
         { text: 'Email', dataIndex: 'Email', flex: 1 },
         // { text: 'Phone', dataIndex: 'Phone', flex: 1 },
         { text: 'ID', dataIndex: 'id', flex: 1 },
         { text: 'Company', dataIndex: 'Company' },
         // { text: 'Department', dataIndex: 'Department', flex: 1 },
-        { text: 'Address', dataIndex: 'Address', flex: 1 }
+        { text: 'Address', dataIndex: 'Address', flex: 1 },
+        
     ],
 
     selModel: {
