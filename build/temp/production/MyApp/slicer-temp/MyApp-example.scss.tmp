@@ -1,5 +1,5 @@
 $app-name:  dynamic( 'MyApp' );
-$image-search-path: 'C:/finalout/MyApp/build/production/MyApp/classic/resources';
+$image-search-path: 'C:/finalout/SenchaApp/MyApp/build/production/MyApp/classic/resources';
 $theme-name:  dynamic( 'theme-triton' );
 $include-ext-abstractcomponent: dynamic(true);;
 $include-ext-abstractcontainer: dynamic(true);;
@@ -980,6 +980,7 @@ $include-ext-window-window: dynamic(true);;
 $include-myapp-application: dynamic(true);;
 $include-myapp-model-base: dynamic(true);;
 $include-myapp-model-data: dynamic(true);;
+$include-myapp-model-logindata: dynamic(true);;
 $include-myapp-model-personnel: dynamic(true);;
 $include-myapp-model-sampledata: dynamic(true);;
 $include-myapp-model-state: dynamic(true);;
@@ -987,11 +988,17 @@ $include-myapp-store-dataemp: dynamic(true);;
 $include-myapp-store-personnel: dynamic(true);;
 $include-myapp-store-sampledata: dynamic(true);;
 $include-myapp-store-states: dynamic(true);;
+$include-myapp-view-login: dynamic(true);;
+$include-myapp-view-main-emppage: dynamic(true);;
 $include-myapp-view-main-list: dynamic(true);;
+$include-myapp-view-main-listcontroller: dynamic(true);;
+$include-myapp-view-main-logincontroller: dynamic(true);;
 $include-myapp-view-main-main: dynamic(true);;
 $include-myapp-view-main-maincontroller: dynamic(true);;
 $include-myapp-view-main-mainmodel: dynamic(true);;
 $include-myapp-view-main-registeremp: dynamic(true);;
+$include-myapp-view-main-save: dynamic(true);;
+$include-myapp-view-main-singlepage: dynamic(true);;
 
 
 /* ======================== ETC ======================== */

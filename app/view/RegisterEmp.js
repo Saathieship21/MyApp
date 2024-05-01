@@ -10,10 +10,10 @@ Ext.define('MyApp.view.main.RegisterEmp', {
         'MyApp.model.Personnel'
     ],
 
-    bodyPadding: 20,
-    height: '80%',
+    bodyPadding: 50,
+    height: '100%',
     scroll: 'y',
-    // scrollable: 'y',
+    scrollable: 'y',
     
 
     items: [{
@@ -161,10 +161,10 @@ Ext.define('MyApp.view.main.RegisterEmp', {
             });
     
             // Store the filtered registration data in IndexedDB
-            const request = window.indexedDB.open('myDatabase', 1);
+            const request = window.indexedDB.open('loginDataform', 1);
             request.onupgradeneeded = function(event) {
                 const db = event.target.result;
-                const store = db.createObjectStore('registrationData', {
+                const store = db.createObjectStore('loginData', {
                     keyPath: 'id',
                     autoIncrement: true
                 });
@@ -172,8 +172,8 @@ Ext.define('MyApp.view.main.RegisterEmp', {
             const button = this;
             request.onsuccess = function(event) {
                 const db = event.target.result;
-                const transaction = db.transaction(['registrationData'], 'readwrite')
-                const store = transaction.objectStore('registrationData')
+                const transaction = db.transaction(['loginData'], 'readwrite')
+                const store = transaction.objectStore('loginData')
                 const request = store.add(filteredData);
                 request.onsuccess = function() {
                     // console.log('Registration data saved to IndexedDB:', filteredData);
@@ -181,14 +181,14 @@ Ext.define('MyApp.view.main.RegisterEmp', {
                     button.up('form').reset();
                 }
                 request.onerror = function(event) {
-                    console.error('Error saving registration data:', event.target.errorCode);
+                    // console.error('Error saving registration data:', event.target.errorCode);
                 }
                 store.getAll().onsuccess = function(event) {
-                    console.log('All registration data:', event.target.result);
+                    // console.log('All registration data:', event.target.result);
                 }
             }
             request.onerror = function(event) {
-                console.error('Error opening database:', event.target.errorCode);
+                // console.error('Error opening database:', event.target.errorCode);
             }
         },
         // handler: 'callBack',

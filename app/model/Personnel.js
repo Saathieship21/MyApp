@@ -5,4 +5,5 @@ Ext.define('MyApp.model.Personnel', {
         'Name','Last', 'Email', 'Phone', 'ID','Company','Dob','Department','Skills', 'Address'
         // 'name', 'EMPID'
     ]
+    
 });

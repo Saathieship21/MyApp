@@ -1,2 +1,2 @@
 // @tag full-page
-// @require C:\Users\phkramachandrudu\NewMyApp\MyApp\app.js
+// @require C:\finalout\SenchaApp\MyApp\app.js
