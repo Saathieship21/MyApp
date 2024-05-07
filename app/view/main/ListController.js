@@ -130,6 +130,19 @@ var id = parsedData.id;
 
 
 },
+onButtonAddClick: function(button) {
+
+
+    var mainPanel = Ext.ComponentQuery.query('#mainPanel')[0];
+                mainPanel.removeAll();
+                mainPanel.add({
+                    // xtype: 'panel',
+                    xtype: 'form-register'
+                });
+},
+
+
+
 
 
 onSearchButtonClick: function(button) {
@@ -137,7 +150,7 @@ onSearchButtonClick: function(button) {
     var combo = view.down('#searchCombo'); // Get a reference to the combobox
     var searchValue = combo.getRawValue(); // Get the value from the combobox
     var store = view.getStore(); // Get the store bound to the grid
- 
+
     // Perform search/filter operation on the store
     store.clearFilter(); // Clear any previous filters
     if (searchValue) {
@@ -152,6 +165,12 @@ onSearchButtonClick: function(button) {
 }
 
 
+});
+   
+
+
+
+
 
 
 
@@ -162,5 +181,5 @@ onSearchButtonClick: function(button) {
 
 
 
-});
+
    

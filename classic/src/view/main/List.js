@@ -108,6 +108,7 @@ Ext.define('MyApp.view.main.List', {
             xtype: 'combobox',
             itemId: 'searchCombo',
             emptyText: 'Search...',
+            itemId: 'searchCombo',
             width: 200,
             valueField: 'abbr',
                 displayField: 'state',
