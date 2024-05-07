@@ -1,7 +1,11 @@
 Ext.define('MyApp.view.main.LoginController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.template-login',
-   
+    
+    onLogin: function(button, e, userName) {
+        // Update the userName property in the view model
+        this.getViewModel().set('userName', userName);
+    },
 
     onLogin: function(button) {
         
@@ -14,15 +18,15 @@ Ext.define('MyApp.view.main.LoginController', {
             var passwordent = formValues.password;
         
             
-            var request = indexedDB.open("loginDataform");
+            var request = indexedDB.open("myDatabase");
         
             
             request.onsuccess = function(event) {
                 var db = event.target.result;
         
                 
-                var transaction = db.transaction(["loginData"], "readwrite");
-                var objectStore = transaction.objectStore("loginData");
+                var transaction = db.transaction(["registrationData"], "readwrite");
+                var objectStore = transaction.objectStore("registrationData");
         
                 
                 var cursorRequest = objectStore.openCursor();

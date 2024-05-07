@@ -17,7 +17,7 @@ Ext.define('MyApp.view.main.List', {
         var me = this;
 
         // Connect to IndexedDB
-        var request = indexedDB.open("loginDataform", 1);
+        var request = indexedDB.open("myDatabase", 1);
 
         request.onerror = function(event) {
             console.log("Error opening IndexedDB database: " + event.target.errorCode);
@@ -25,13 +25,13 @@ Ext.define('MyApp.view.main.List', {
 
         request.onupgradeneeded = function(event) {
             var db = event.target.result;
-            var objectStore = db.createObjectStore("loginData", { keyPath: "id" });
+            var objectStore = db.createObjectStore("registrationData", { keyPath: "id" });
         };
 
         request.onsuccess = function(event) {
             var db = event.target.result;
-            var transaction = db.transaction("loginData", "readonly");
-            var objectStore = transaction.objectStore("loginData");
+            var transaction = db.transaction("registrationData", "readonly");
+            var objectStore = transaction.objectStore("registrationData");
             var request = objectStore.getAll();
 
             request.onerror = function(event) {
@@ -106,6 +106,7 @@ Ext.define('MyApp.view.main.List', {
         {
             // xtype: 'textfield',
             xtype: 'combobox',
+            itemId: 'searchCombo',
             emptyText: 'Search...',
             width: 200,
             valueField: 'abbr',
