@@ -77,12 +77,14 @@ onChecked: function(selModel, record, index, eOpts) {
     console.log('Checkbox selected:', record.get('Name'));
     const Name = record.get('Name')
     const id = record.get('id')
+    const Company = record.get('Company')
     // console.log(Name);
 
     // Assuming you have some data to save
 var dataToSave = {
     Name,
-    id
+    id,
+    Company,
 };
 
 // Convert the data to a JSON string
@@ -97,39 +99,28 @@ window.addEventListener('beforeunload', function() {
 },
 
 onButtonDetailsClick: function(button) {
-
-    // var jsonData = sessionStorage.getItem('userData');
-
-    // // Convert the JSON string back to a JavaScript object
-    // var retrievedData = Ext.JSON.decode(jsonData);
-
-    // // Log the retrieved data to the console
-    // console.log(retrievedData,"jsonData");
-    // // console.log(Name,"retrievedData.Name");
-   
-    // var jsonData = sessionStorage.getItem('userData');
-
-    // // Log the retrieved JSON string to the console along with a custom message
-    // console.log("Retrieved JSON data:", jsonData);
-    
-    // console.table(jsonData)
-
-var jsonData = sessionStorage.getItem('userData');
-
-// Parse the JSON string into a JavaScript object
-var parsedData = Ext.JSON.decode(jsonData);
-alert(jsonData);
-
-// Extract Name and id properties
-var name = parsedData.Name;
-var id = parsedData.id;
-
-// Log the extracted data to the console
-// console.log("Name:", name);
-// console.log("ID:", id);
-
-
-},
+    // Retrieve the JSON data from session storage
+    const jsonData = sessionStorage.getItem('userData');
+  
+    // Check if the data exists before attempting to parse it
+    if (jsonData) {
+      // Parse the JSON string into a JavaScript object
+      const userData = Ext.JSON.decode(jsonData);
+  
+      // Extract the Name and id properties
+      const { Name: name, id, Company } = userData;
+  
+      // Create a modal box to display the user details
+      Ext.Msg.show({
+        title: 'User Details',
+        message: `Name: ${name}<br>ID: ${id}<br>Company: ${Company}`,
+        buttons: Ext.Msg.OK,
+        icon: Ext.Msg.INFO
+      });
+    } else {
+      console.error('No user data found in session storage');
+    }
+  },
 onButtonAddClick: function(button) {
 
 
