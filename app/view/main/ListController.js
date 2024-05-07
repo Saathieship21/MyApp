@@ -130,7 +130,43 @@ var id = parsedData.id;
 
 
 },
+onButtonAddClick: function(button) {
 
+
+    var mainPanel = Ext.ComponentQuery.query('#mainPanel')[0];
+                mainPanel.removeAll();
+                mainPanel.add({
+                    // xtype: 'panel',
+                    xtype: 'form-register'
+                });
+},
+
+
+
+
+
+onSearchButtonClick: function(button) {
+    var view = this.getView();
+    var combo = view.down('#searchCombo'); // Get a reference to the combobox
+    var searchValue = combo.getRawValue(); // Get the value from the combobox
+    var store = view.getStore(); // Get the store bound to the grid
+
+    // Perform search/filter operation on the store
+    store.clearFilter(); // Clear any previous filters
+    if (searchValue) {
+        store.filterBy(function(record) {
+            // Customize this logic according to your data structure and search criteria
+            return record.get('Name').toLowerCase().indexOf(searchValue.toLowerCase()) !== -1; // Example: filter by name
+        });
+    } else {
+        // If search value is empty, clear the filter to show all records
+        store.clearFilter();
+    }
+}
+
+
+});
+   
 
 
 
@@ -145,5 +181,5 @@ var id = parsedData.id;
 
 
 
-});
+
    
