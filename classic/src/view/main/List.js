@@ -9,7 +9,7 @@ Ext.define('MyApp.view.main.List', {
         'MyApp.view.main.ListController'
         
     ],
-
+   
     title: 'Employee details',
 
     // Connect to IndexedDB and retrieve data
@@ -55,14 +55,14 @@ Ext.define('MyApp.view.main.List', {
     },
   
     columns: [
-        { text: 'Name', dataIndex: 'Name',  },
-        { text: 'Last', dataIndex: 'Last' },
-        { text: 'Email', dataIndex: 'Email', flex: 1 },
+        { text: 'Name', dataIndex: 'Name', editable: true, },
+        {  text: 'Last', dataIndex: 'Last' },
+        { text: 'Email', dataIndex: 'Email', flex: 1 , editable: true,},
         // { text: 'Phone', dataIndex: 'Phone', flex: 1 },
-        { text: 'ID', dataIndex: 'id', flex: 1 },
-        { text: 'Company', dataIndex: 'Company' },
+        { text: 'ID', dataIndex: 'id', flex: 1, editable: true, },
+        { text: 'Company', dataIndex: 'Company', editable: true, },
         // { text: 'Department', dataIndex: 'Department', flex: 1 },
-        { text: 'Address', dataIndex: 'Address', flex: 1 },
+        { text: 'Address', dataIndex: 'Address', flex: 1, editable: true, },
         
     ],
     
@@ -101,7 +101,8 @@ Ext.define('MyApp.view.main.List', {
             text: 'Delete',
             tooltip: 'delete',
             reference: 'btndelete',
-            disabled: true
+            disabled: true,
+            handler: 'onDeleteButtonClick'
         },
         {
             // xtype: 'textfield',

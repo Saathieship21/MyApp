@@ -73,13 +73,26 @@ Ext.define('MyApp.view.main.ListController', {
 
 // }
 onChecked: function(selModel, record, index, eOpts) {
+  
     // Your logic here when a checkbox is selected
     console.log('Checkbox selected:', record.get('Name'));
     const Name = record.get('Name')
     const id = record.get('id')
     const Company = record.get('Company')
     // console.log(Name);
+    // var grid = this.getView();
+    // var deleteButton = grid.down('#btndelete');
+    // deleteButton.setDisabled(false);
 
+   //delete
+        var deleteButton = this.lookupReference('btndelete');
+        console.log(deleteButton); // Check if deleteButton is null
+        if (deleteButton) {
+            deleteButton.setDisabled(false);
+        } else {
+            console.error("Delete button not found");
+        }
+    
     // Assuming you have some data to save
 var dataToSave = {
     Name,
@@ -132,7 +145,31 @@ onButtonAddClick: function(button) {
                 });
 },
 
-
+  //delete function
+  onDeleteButtonClick: function() {
+    var grid = this.getView();
+    var selection = grid.getSelectionModel().getSelection();
+    if (selection.length > 0) {
+        var id = selection[0].get('id');
+        var request = indexedDB.open("myDatabase", 1);
+        request.onerror = function(event) {
+            console.log("Error opening IndexedDB database: " + event.target.errorCode);
+        };
+        request.onsuccess = function(event) {
+            var db = event.target.result;
+            var transaction = db.transaction("registrationData", "readwrite");
+            var objectStore = transaction.objectStore("registrationData");
+            var request = objectStore.delete(id);
+            request.onsuccess = function(event) {
+                console.log("Record deleted successfully");
+                grid.getStore().remove(selection);
+            };
+            request.onerror = function(event) {
+                console.log("Error deleting record: " + event.target.errorCode);
+            };
+        };
+    }
+},
 
 
 
@@ -153,12 +190,17 @@ onSearchButtonClick: function(button) {
         // If search value is empty, clear the filter to show all records
         store.clearFilter();
     }
-}
+},
 
-
+// window.onbeforeunload = function(event) {
+//     event.preventDefault();
+// },
 });
-   
 
+
+window.onbeforeunload = function(event) {
+    event.preventDefault();
+};
 
 
 
