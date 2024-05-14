@@ -12,57 +12,120 @@ Ext.define('MyApp.view.main.List', {
    
     title: 'Employee details',
 
-    // Connect to IndexedDB and retrieve data
+    
     initComponent: function() {
         var me = this;
-
+    
         // Connect to IndexedDB
-        var request = indexedDB.open("myDatabase", 1);
-
-        request.onerror = function(event) {
+        me.dbRequest = indexedDB.open("myDatabase", 1);
+    
+        me.dbRequest.onerror = function(event) {
             console.log("Error opening IndexedDB database: " + event.target.errorCode);
         };
-
-        request.onupgradeneeded = function(event) {
+    
+        me.dbRequest.onupgradeneeded = function(event) {
             var db = event.target.result;
             var objectStore = db.createObjectStore("registrationData", { keyPath: "id" });
         };
-
-        request.onsuccess = function(event) {
-            var db = event.target.result;
-            var transaction = db.transaction("registrationData", "readonly");
+    
+        me.dbRequest.onsuccess = function(event) {
+            me.db = event.target.result;
+            var transaction = me.db.transaction("registrationData", "readonly");
             var objectStore = transaction.objectStore("registrationData");
             var request = objectStore.getAll();
-
+    
             request.onerror = function(event) {
                 console.log("Error retrieving data from IndexedDB: " + event.target.errorCode);
             };
-
+    
             request.onsuccess = function(event) {
                 var data = event.target.result;
-
+    
                 // Create a new Store and set its data to the retrieved data
                 var store = Ext.create('MyApp.store.Personnel', {
                     data: data
                 });
-
+    
                 // Set the new Store as the Store for the Grid
                 me.setStore(store);
             };
         };
-
+    
         me.callParent();
+    },
+    
+    plugins: {
+        cellediting: {
+            clicksToEdit: 2,
+            listeners: {
+                edit: function(editor, e) {
+                    var me = editor.cmp; // Get the grid component
+                    var updatedRecord = e.record;
+                    var transaction = me.db.transaction("registrationData", "readwrite");
+                    var objectStore = transaction.objectStore("registrationData");
+                    var request = objectStore.put(updatedRecord.data);
+    
+                    request.onerror = function(event) {
+                        console.log("Error updating data in IndexedDB: " + event.target.errorCode);
+                    };
+    
+                    request.onsuccess = function(event) {
+                        console.log("Data updated successfully in IndexedDB");
+                    };
+                }
+            }
+        }
     },
   
     columns: [
-        { text: 'Name', dataIndex: 'Name', editable: true, },
-        {  text: 'Last', dataIndex: 'Last' },
-        { text: 'Email', dataIndex: 'Email', flex: 1 , editable: true,},
+        { text: 'Name', dataIndex: 'Name', editable: true,
+         editor: {
+            // xtype: 'combo',//dropdown list with predefined options
+            typeAhead: true,
+        //     triggerAction: 'all',
+        //     selectOnFocus: false,
+            
+        }
+            
+            },
+        {  text: 'Last', dataIndex: 'Last', editable: true, editor: {
+            // xtype: 'combo',//dropdown list with predefined options
+            typeAhead: true,
+        //     triggerAction: 'all',
+        //     selectOnFocus: false,
+            
+        }},
+        { text: 'Email', dataIndex: 'Email', flex: 1 , editable: true,editor: {
+            // xtype: 'combo',//dropdown list with predefined options
+            typeAhead: true,
+        //     triggerAction: 'all',
+        //     selectOnFocus: false,
+            
+        }},
         // { text: 'Phone', dataIndex: 'Phone', flex: 1 },
-        { text: 'ID', dataIndex: 'id', flex: 1, editable: true, },
-        { text: 'Company', dataIndex: 'Company', editable: true, },
-        // { text: 'Department', dataIndex: 'Department', flex: 1 },
-        { text: 'Address', dataIndex: 'Address', flex: 1, editable: true, },
+        { text: 'ID', dataIndex: 'id', flex: 1, editable: true, editor: {
+            // xtype: 'combo',//dropdown list with predefined options
+            typeAhead: true,
+        //     triggerAction: 'all',
+        //     selectOnFocus: false,
+            
+        } },
+        { text: 'Company', dataIndex: 'Company', editable: true, editor: {
+            // xtype: 'combo',//dropdown list with predefined options
+            typeAhead: true,
+        //     triggerAction: 'all',
+        //     selectOnFocus: false,
+            
+        }},
+       
+        { text: 'Address', dataIndex: 'Address', flex: 1, editable: true, editor: {
+            // xtype: 'combo',//dropdown list with predefined options
+            typeAhead: true,
+        //     triggerAction: 'all',
+        //     selectOnFocus: false,
+        // store: Ext.getStore('MyApp.store.States'),
+        
+        }},
         
     ],
     
@@ -128,14 +191,15 @@ Ext.define('MyApp.view.main.List', {
             iconCls: 'x-fa fa-search blue',
             handler: 'onSearchButtonClick',
            },
-        {
-            xtype: 'button',
-            itemId: 'edit',
-            text: 'Edit',
-            tooltip: 'Edit',
-            reference: 'btnedit',
-            disabled: true
-        },
+        // {
+        //     xtype: 'button',
+        //     itemId: 'edit',
+        //     text: 'Edit',
+        //     tooltip: 'Edit',
+        //     reference: 'btnedit',
+        //     disabled: true,
+        //     handler: 'onEditButtonClick'
+        // },
         {
             xtype: 'button',
             itemId: 'add',

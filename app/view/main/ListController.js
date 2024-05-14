@@ -80,9 +80,6 @@ onChecked: function(selModel, record, index, eOpts) {
     const id = record.get('id')
     const Company = record.get('Company')
     // console.log(Name);
-    // var grid = this.getView();
-    // var deleteButton = grid.down('#btndelete');
-    // deleteButton.setDisabled(false);
 
    //delete
         var deleteButton = this.lookupReference('btndelete');
@@ -93,6 +90,14 @@ onChecked: function(selModel, record, index, eOpts) {
             console.error("Delete button not found");
         }
     
+        //Edit
+        // var editButton = this.lookupReference('btnedit');
+        // console.log(editButton); // Check if editButton is null
+        // if (editButton) {
+        //     editButton.setDisabled(false);
+        // } else {
+        //     console.error("Edit button not found");
+        // }
     // Assuming you have some data to save
 var dataToSave = {
     Name,
@@ -171,7 +176,79 @@ onButtonAddClick: function(button) {
     }
 },
 
-
+//Edit button function
+// onEditButtonClick: function() {
+//     var grid = this.getView();
+//     var selection = grid.getSelectionModel().getSelection();
+//     if (selection.length > 0) {
+//         var record = selection[0];
+//         var id = record.get('id');
+//         var request = indexedDB.open("myDatabase", 1);
+//         request.onerror = function(event) {
+//             console.log("Error opening IndexedDB database: " + event.target.errorCode);
+//         };
+//         request.onsuccess = function(event) {
+//             var db = event.target.result;
+//             var transaction = db.transaction("registrationData", "readwrite");
+//             var objectStore = transaction.objectStore("registrationData");
+//             var request = objectStore.get(id);
+//             request.onsuccess = function(event) {
+//                 var data = event.target.result;
+//                 // Create a form to edit the record
+//                 var form = Ext.create('Ext.form.Panel', {
+//                     title: 'Edit Record',
+//                     items: [{
+//                         xtype: 'textfield',
+//                         name: 'Name',
+//                         value: data.Name
+//                     }, {
+//                         xtype: 'textfield',
+//                         name: 'Last',
+//                         value: data.Last
+//                     }, {
+//                         xtype: 'textfield',
+//                         name: 'Email',
+//                         value: data.Email
+//                     }, {
+//                         xtype: 'textfield',
+//                         name: 'Company',
+//                         value: data.Company
+//                     }, {
+//                         xtype: 'textfield',
+//                         name: 'Address',
+//                         value: data.Address
+//                     }],
+//                     buttons: [{
+//                         text: 'Save',
+//                         handler: function() {
+//                             var formValues = form.getForm().getValues();
+//                             var updatedRecord = {
+//                                 id: id,
+//                                 Name: formValues.Name,
+//                                 Last: formValues.Last,
+//                                 Email: formValues.Email,
+//                                 Company: formValues.Company,
+//                                 Address: formValues.Address
+//                             };
+//                             objectStore.put(updatedRecord);
+//                             form.close();
+//                             grid.getStore().loadData([updatedRecord]);
+//                         }
+//                     }, {
+//                         text: 'Cancel',
+//                         handler: function() {
+//                             form.close();
+//                         }
+//                     }]
+//                 });
+//                 form.show();
+//             };
+//             request.onerror = function(event) {
+//                 console.log("Error retrieving record: " + event.target.errorCode);
+//             };
+//         };
+//     }
+// },
 
 onSearchButtonClick: function(button) {
     var view = this.getView();
